@@ -17,7 +17,7 @@ public class ShowroomTriggerTest {
         List<Showroom__c> showrooms = TestFactory.createShowrooms(151);
         
         for(Integer i=0; i<151; i++) {
-            showrooms[i].Status__c = 'Closed';
+            showrooms[i].Status__c = Constants.picklistClosed;
         }
         
         Test.startTest();
@@ -47,7 +47,7 @@ public class ShowroomTriggerTest {
         update cars;
         
         for(Integer i=0; i<151; i++) {
-            showrooms[i].Status__c = 'Closed';
+            showrooms[i].Status__c = Constants.picklistClosed;
         }
         
         Test.startTest();
@@ -57,7 +57,7 @@ public class ShowroomTriggerTest {
         for(Integer i=0; i<151; i++) {
             System.assert(!testResult[i].isSuccess());
             System.assert(testResult[i].getErrors().size() > 0);
-            System.assertEquals('Cannot close because there are cars left in the showroom',
+            System.assertEquals(Constants.cannotCloseError,
                                  testResult[i].getErrors()[0].getMessage());
    		}
     }
@@ -99,7 +99,7 @@ public class ShowroomTriggerTest {
         
         System.assert(!testResult[0].isSuccess());
         System.assert(testResult[0].getErrors().size() > 0);
-        System.assertEquals('Account of this showroom already has a warehouse: ' + showrooms[0].Name,
+        System.assertEquals(Constants.thereAlreadyIsWarehouseError + showrooms[0].Name,
                              testResult[0].getErrors()[0].getMessage());
     }
     
@@ -153,7 +153,7 @@ public class ShowroomTriggerTest {
         
         System.assert(!testResult[0].isSuccess());
         System.assert(testResult[0].getErrors().size() > 0);
-        System.assertEquals('Number of car spaces cannot be less then number of cars available at the showroom!',
+        System.assertEquals(Constants.lessThanCarsAvailableError,
                              testResult[0].getErrors()[0].getMessage());
     }
 }

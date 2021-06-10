@@ -15,16 +15,31 @@ public class ShowroomHandler1 {
     * @param newShowrooms list of showroom objects to check
     */
     public static void checkIfOnlyOneWarehouse(List<Showroom__c> newShowrooms) {
-            List<Showroom__c> warehouseShowrooms = [SELECT Account__c, Name FROM Showroom__c WHERE Warehouse__c = true];
-            
+            Set<Id> accountsIds = new Set<Id>();
             for(Showroom__c showroom : newShowrooms){
                 if(showroom.Warehouse__c == true){
-                    for(Showroom__c warehouse : warehouseShowrooms){
-                        if(warehouse.Account__c == showroom.Account__c && warehouse.Id != showroom.Id){
-                            showroom.addError(
-                               'Account of this showroom already has a warehouse: ' + warehouse.Name);
-                            break;
-                        }
+                    accountsIds.add(showroom.Account__c);
+                }
+            }
+
+            List<Showroom__c> warehouseList = [SELECT Id, Account__c, Name FROM Showroom__c 
+                WHERE Warehouse__c = true 
+                AND Account__c IN :accountsIds];
+
+            Map<Id, Showroom__c> accountIdToWarehouseMap = new Map<Id, Showroom__c>();
+            for(Showroom__c warehouse : warehouseList){
+                accountIdToWarehouseMap.put(warehouse.Account__c, warehouse);
+            }
+
+            for(Showroom__c showroom : newShowrooms){
+                if(showroom.Warehouse__c == true){
+                    Showroom__c warehouse = accountIdToWarehouseMap.get(showroom.Account__c);
+                    if(warehouse == null){
+                        accountIdToWarehouseMap.put(showroom.Account__c, showroom);
+                    }
+                    else if(warehouse.Id != showroom.Id){
+                        showroom.addError(
+                            Constants.thereAlreadyIsWarehouseError + warehouse.Name);
                     }
                 }
             }
@@ -41,25 +56,24 @@ public class ShowroomHandler1 {
     public static void checkIfShowroomIsEmptyBeforeClosing(List<Showroom__c> newShowrooms) {
         List<Showroom__c> showroomsToClose = new List<Showroom__c>();
         for(Showroom__c showroom : newShowrooms){
-            if(showroom.Status__c == 'Closed'){
+            if(showroom.Status__c == Constants.picklistClosed){
                 showroomsToClose.add(showroom);
             }
         }
         
-        List<Car__c> carsInShowroom = new List<Car__c>(
-            [SELECT Id, Showroom__c From Car__c
-             WHERE Showroom__c IN :showroomsToClose]);
-            
+        List<Car__c> carsInShowrooms = [SELECT Id, Showroom__c FROM Car__c
+             WHERE Showroom__c IN :showroomsToClose];
 
+        Set<Id> showroomsWithCarsIds = new Set<Id>();
+        for(Car__c car : carsInShowrooms){
+            showroomsWithCarsIds.add(car.Showroom__c);
+        }
+            
         for(Showroom__c showroom : showroomsToClose){
-            for(Car__c car : carsInShowroom){
-                if(car.Showroom__c == showroom.Id){
-                    showroom.addError(
-                        'Cannot close because there are cars left in the showroom');
-                    break;
-                }
-            }
-                
+            if(showroomsWithCarsIds.contains(showroom.Id)){
+                showroom.addError(
+                    Constants.cannotCloseError);
+            }   
         }
     }
     
@@ -73,25 +87,27 @@ public class ShowroomHandler1 {
     */
     public static void checkEditingNumberOfCarSpaces(List<Showroom__c> newShowrooms) {
 
-            List<Car__c> carsAtShowrooms = new List<Car__c>(
-                [SELECT Id, Showroom__c FROM Car__c WHERE Showroom__c != null]);
+            List<Car__c> carsAtShowrooms = [SELECT Id, Showroom__c FROM Car__c WHERE Showroom__c IN :newShowrooms];
             List<Car__c> carsAtShowroom = new List<Car__c>();
+
+            Map<Id, Integer> showroomToCarCount = new Map<Id, Integer>();
+            for(Showroom__c showroom : newShowrooms){
+                showroomToCarCount.put(showroom.Id, 0);
+            }
+            for(Car__c car : carsAtShowrooms){
+                Integer carCount = showroomToCarCount.get(car.Showroom__c);
+                showroomToCarCount.put(car.Showroom__c, carCount+1);
+            }
             
             for(Showroom__c showroom : newShowrooms){
                 if(showroom.Car_Spaces__c < 0){
                     showroom.addError(
-                               'Number of car spaces cannot be less then 0!');
+                               Constants.lessThanZeroError);
                     continue;
                 }
-
-                for(Car__c carAtShowroom : carsAtShowrooms){
-                    if(carAtShowroom.Showroom__c == showroom.Id){
-                        carsAtShowroom.add(carAtShowroom);
-                    }
-                }
-                if(showroom.Car_Spaces__c < carsAtShowroom.size()){
+                if(showroom.Car_Spaces__c < showroomToCarCount.get(showroom.Id)){
                     showroom.addError(
-                               'Number of car spaces cannot be less then number of cars available at the showroom!');
+                               Constants.lessThanCarsAvailableError);
                 }
             }
     }

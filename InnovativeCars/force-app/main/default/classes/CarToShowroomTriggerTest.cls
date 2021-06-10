@@ -24,9 +24,9 @@ public class CarToShowroomTriggerTest {
             
             String availability;
             if(i < 100){
-                availability = 'Available at the showroom';
+                availability = Constants.picklistAvailable;
             } else {
-                availability = 'Available at different showroom';
+                availability = Constants.picklistAvailableAtDifferent;
             }
             
             Car_To_Showroom__c testCarToShowroom = new Car_To_Showroom__c(
@@ -71,7 +71,7 @@ public class CarToShowroomTriggerTest {
             Car_To_Showroom__c newCarToShowroom = new Car_To_Showroom__c(
             	Car__c = testCars[i].Id, 
             	Showroom__c = testShowrooms[0].Id, 
-            	Availability__c = 'Available at the showroom');
+            	Availability__c = Constants.picklistAvailable);
         	testCarToShowrooms.add(newCarToShowroom);
         }
         insert testCarToShowrooms;
@@ -81,7 +81,7 @@ public class CarToShowroomTriggerTest {
             Car_To_Showroom__c newCarToShowroom = new Car_To_Showroom__c(
             	Car__c = testCars[i].Id, 
             	Showroom__c = testShowrooms[0].Id, 
-            	Availability__c = 'Available at the showroom');
+            	Availability__c = Constants.picklistAvailable);
         	newCarToShowrooms.add(newCarToShowroom);
         }
         
@@ -92,7 +92,7 @@ public class CarToShowroomTriggerTest {
         for(Integer i=0; i<151; i++){
             System.assert(!testResult[i].isSuccess());
             System.assert(testResult[i].getErrors().size() > 0);
-            System.assertEquals('The car is already available at showroom',
+            System.assertEquals(Constants.alreadyAvailableError,
                                  testResult[i].getErrors()[0].getMessage());
         }
     }
@@ -113,7 +113,7 @@ public class CarToShowroomTriggerTest {
             Car_To_Showroom__c newCarToShowroom = new Car_To_Showroom__c(
             	Car__c = testCars[i].Id, 
             	Showroom__c = testShowrooms[0].Id, 
-            	Availability__c = 'Available at the showroom');
+            	Availability__c = Constants.picklistAvailable);
         	newCarToShowrooms.add(newCarToShowroom);
         }
         
@@ -124,7 +124,7 @@ public class CarToShowroomTriggerTest {
         for(Integer i=0; i<151; i++){
             System.assert(!testResult[i].isSuccess());
             System.assert(testResult[i].getErrors().size() > 0);
-            System.assertEquals('The car is not in selected showroom',
+            System.assertEquals(Constants.notInShowroomError,
                                  testResult[i].getErrors()[0].getMessage());
         }
     }

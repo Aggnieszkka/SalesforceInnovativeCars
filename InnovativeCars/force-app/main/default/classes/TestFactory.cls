@@ -17,7 +17,7 @@ public class TestFactory {
     */
     public static List<Car__c> createCars(Integer carsNumber){
 
-        List<Account> accounts = [SELECT Id FROM Account WHERE Name LIKE 'Super Cars'];
+        List<Account> accounts = [SELECT Id FROM Account WHERE Name = :Constants.testAccountName];
         if(accounts.size() == 0){
             accounts = createAccount();
         }
@@ -63,7 +63,7 @@ public class TestFactory {
     */
     public static List<Showroom__c> createShowrooms(Integer showroomsNumber){
 
-        List<Account> accounts = [SELECT Id FROM Account WHERE Name LIKE 'Super Cars'];
+        List<Account> accounts = [SELECT Id FROM Account WHERE Name = :Constants.testAccountName];
         if(accounts.size() == 0){
             accounts = createAccount();
         }
@@ -71,8 +71,8 @@ public class TestFactory {
         List<Showroom__c> showrooms = new List<Showroom__c>();
         for(Integer i = 0; i < showroomsNumber; i++){
             Showroom__c newShowroom = new Showroom__c(
-                Name = 'Super fast cars' + i, 
-                Type__c = 'Personal Cars', 
+                Name = Constants.testCarName + i, 
+                Type__c = Constants.picklistPersonalCars, 
                 Account__c = accounts[0].Id);
             showrooms.add(newShowroom);
         }
@@ -90,7 +90,7 @@ public class TestFactory {
     * @return list containing created account
     */
     private static List<Account> createAccount(){
-        Account newAccount = new Account(Name = 'Super Cars');
+        Account newAccount = new Account(Name = Constants.testAccountName);
         List<Account> newAccounts = new List<Account>{newAccount};
         insert newAccounts;
         return newAccounts;

@@ -21,8 +21,8 @@ public class CarHandler {
             }
         }
         
-        List<Showroom__c> showrooms = new List<Showroom__c>([SELECT Id, Car_Spaces__c FROM Showroom__c WHERE Id IN :showroomIds]);
- 		List<Car__c> cars = new List<Car__c>([SELECT Id, Showroom__c FROM Car__c WHERE Showroom__c IN :showroomIds]);
+        List<Showroom__c> showrooms = [SELECT Id, Car_Spaces__c FROM Showroom__c WHERE Id IN :showroomIds];
+ 		List<Car__c> cars = [SELECT Id, Showroom__c FROM Car__c WHERE Showroom__c IN :showroomIds];
  		
         Map<Id, Decimal> showroomIdToCarCount = new Map<Id, Decimal>();
         Map<Id, Decimal> showroomIdToCarSpaces = new Map<Id, Decimal>();
@@ -51,7 +51,7 @@ public class CarHandler {
                 showroomIdToCarCount.put(car.Showroom__c, carInShowroomCount + 1);
             } else {
                 car.addError(
-                    'Cannot add a new car because the showroom is full!');
+                    Constants.fullShowroomError);
             }
     	}
     }
@@ -81,7 +81,7 @@ public class CarHandler {
     * @param deletedCars list of car objects
     */
     public static void deleteTelemetries(List<Car__c> deletedCars) {
-    		List<Telemetry__c> telemetries = new List<Telemetry__c>([SELECT Id FROM Telemetry__c WHERE Car__c IN :deletedCars]);
+    		List<Telemetry__c> telemetries = [SELECT Id FROM Telemetry__c WHERE Car__c IN :deletedCars];
     		delete telemetries;
     }
 }

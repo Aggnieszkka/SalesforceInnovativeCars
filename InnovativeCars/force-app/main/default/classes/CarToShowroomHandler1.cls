@@ -16,26 +16,35 @@ public class CarToShowroomHandler1 {
     */
     public static void checkIfCarIsAlreadyAvailable(List<Car_To_Showroom__c> newOffers) {
         Set<Id> carIds = new Set<Id>();
+        Set<Id> showroomIds = new Set<Id>();
         for(Car_To_Showroom__c newOffer : newOffers) {
-            if(newOffer.Availability__c == 'Available at the showroom') {
+            if(newOffer.Availability__c == Constants.picklistAvailable) {
                 carIds.add(newOffer.Car__c);
+                showroomIds.add(newOffer.Showroom__c);
             }
         }
-        List<Car_To_Showroom__c> carToShowroomsList = new List <Car_To_Showroom__c>(
-            [SELECT Car__c, Showroom__c FROM Car_To_Showroom__c 
-             WHERE Availability__c LIKE 'Available at the showroom' 
-             AND Car__c IN :carIds]);
+
+        Map<Id, Showroom__c> showroomMap = new Map<Id, Showroom__c>([SELECT Id, Name FROM Showroom__c WHERE Id IN :showroomIds]);
+
+        List<Car_To_Showroom__c> carToShowroomsList = [SELECT Id, Car__c, Showroom__c FROM Car_To_Showroom__c 
+             WHERE Availability__c = :Constants.picklistAvailable 
+             AND Car__c IN :carIds];
+
+        Map<Id, Id> existingCarAtShowrooms = new Map<Id, Id>();
+        for(Car_To_Showroom__c carToShowroom : carToShowroomsList){
+            existingCarAtShowrooms.put(carToShowroom.Car__c, carToShowroom.Id);
+        }
         
         for (Car_To_Showroom__c carToShowroom : newOffers){
-            if(carToShowroom.Availability__c == 'Available at the showroom'){
-                for(Car_To_Showroom__c existingCarToShowroom : carToShowroomsList){
-                    if(existingCarToShowroom.Car__c == carToShowroom.Car__c){
-                        if(existingCarToShowroom.Id != carToShowroom.ID){
-                        	carToShowroom.addError(
-                            	'The car is already available at showroom');
-                        }
-                        break;
-                    }
+            if(carToShowroom.Availability__c == Constants.picklistAvailable){
+                Id existingCarToShowroomId = existingCarAtShowrooms.get(carToShowroom.Car__c);
+                if(existingCarToShowroomId == null){
+                    existingCarAtShowrooms.put(carToShowroom.Car__c, carToShowroom.Id);
+                }
+                else if(existingCarToShowroomId != carToShowroom.ID){
+                    String name = showroomMap.get(carToShowroom.Showroom__c).Name;
+                    carToShowroom.addError(
+                        Constants.alreadyAvailableError + ' ' + name);
                 }
             }
         }
@@ -51,14 +60,14 @@ public class CarToShowroomHandler1 {
     public static void checkIfCarIsInShowroom(List<Car_To_Showroom__c> newOffers) {
         Set<Id> carIds = new Set<Id>();
         for(Car_To_Showroom__c newOffer : newOffers) {
-            if(newOffer.Availability__c == 'Available at the showroom') {
+            if(newOffer.Availability__c == Constants.picklistAvailable) {
                 carIds.add(newOffer.Car__c);
             }
         }
-        List<Car__c> carList = new List <Car__c>([SELECT Id, Showroom__c FROM Car__c WHERE Id in :carIds]);
+        List<Car__c> carList = [SELECT Id, Showroom__c FROM Car__c WHERE Id in :carIds];
         
         for(Car_To_Showroom__c newOffer : newOffers) {
-            if(newOffer.Availability__c != 'Available at the showroom') {
+            if(newOffer.Availability__c != Constants.picklistAvailable) {
                 continue;
             }
             
@@ -66,7 +75,7 @@ public class CarToShowroomHandler1 {
                 if(newOffer.Car__c == car.Id) {
                     if(newOffer.Showroom__c != car.Showroom__c) {
                         newOffer.addError(
-                                'The car is not in selected showroom');
+                            Constants.notInShowroomError);
                     } 
                     break;
                 }
