@@ -39,7 +39,7 @@ public class ShowroomHandler1 {
                     }
                     else if(warehouse.Id != showroom.Id){
                         showroom.addError(
-                            Constants.thereAlreadyIsWarehouseError + warehouse.Name);
+                            Constants.THERE_ALREADY_IS_WAREHOUSE_ERROR + warehouse.Name);
                     }
                 }
             }
@@ -56,7 +56,7 @@ public class ShowroomHandler1 {
     public static void checkIfShowroomIsEmptyBeforeClosing(List<Showroom__c> newShowrooms) {
         List<Showroom__c> showroomsToClose = new List<Showroom__c>();
         for(Showroom__c showroom : newShowrooms){
-            if(showroom.Status__c == Constants.picklistClosed){
+            if(showroom.Status__c == Constants.PICKLIST_CLOSED){
                 showroomsToClose.add(showroom);
             }
         }
@@ -72,7 +72,7 @@ public class ShowroomHandler1 {
         for(Showroom__c showroom : showroomsToClose){
             if(showroomsWithCarsIds.contains(showroom.Id)){
                 showroom.addError(
-                    Constants.cannotCloseError);
+                    Constants.CANNOT_CLOSE_ERROR);
             }   
         }
     }
@@ -102,12 +102,12 @@ public class ShowroomHandler1 {
             for(Showroom__c showroom : newShowrooms){
                 if(showroom.Car_Spaces__c < 0){
                     showroom.addError(
-                               Constants.lessThanZeroError);
+                               Constants.LESS_THAN_ZERO_ERROR);
                     continue;
                 }
                 if(showroom.Car_Spaces__c < showroomToCarCount.get(showroom.Id)){
                     showroom.addError(
-                               Constants.lessThanCarsAvailableError);
+                               Constants.LESS_THAN_CARS_AVAILABLE_ERROR);
                 }
             }
     }

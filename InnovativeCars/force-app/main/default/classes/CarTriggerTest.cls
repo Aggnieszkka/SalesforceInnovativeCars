@@ -63,7 +63,7 @@ public class CarTriggerTest {
         for(Integer i=0; i<151; i++) {
             System.assert(!testResult[i].isSuccess());
         	System.assert(testResult[i].getErrors().size() > 0);
-        	System.assertEquals(Constants.fullShowroomError,
+        	System.assertEquals(Constants.FULL_SHOWROOM_ERROR,
                              testResult[i].getErrors()[0].getMessage());
         }
     }
@@ -80,8 +80,8 @@ public class CarTriggerTest {
         List<Telemetry__c> telemetries = new List<Telemetry__c>();
         
         for(Integer i = 0; i<151; i++){
-            telemetries.add(new Telemetry__c(Car__c = testCars[i].Id, Type__c = Constants.picklistTemperature));
-        	telemetries.add(new Telemetry__c(Car__c = testCars[i].Id, Type__c = Constants.picklistRotationSpeed));
+            telemetries.add(new Telemetry__c(Car__c = testCars[i].Id, Type__c = Constants.PICKLIST_TEMPERATURE));
+        	telemetries.add(new Telemetry__c(Car__c = testCars[i].Id, Type__c = Constants.PICKLIST_ROTATION_SPEED));
             
         }
         insert telemetries;

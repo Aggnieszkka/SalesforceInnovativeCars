@@ -51,7 +51,7 @@ public class CarHandler {
                 showroomIdToCarCount.put(car.Showroom__c, carInShowroomCount + 1);
             } else {
                 car.addError(
-                    Constants.fullShowroomError);
+                    Constants.FULL_SHOWROOM_ERROR);
             }
     	}
     }
