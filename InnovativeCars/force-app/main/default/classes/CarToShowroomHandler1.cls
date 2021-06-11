@@ -22,10 +22,10 @@ public class CarToShowroomHandler1 {
             }
         }
 
-        List<Car__c> cars = [SELECT Id FROM Car__c WHERE Id IN :carIds];
-        Map<Car__c, String> carToShowroomNameMap = new Map<Car__c, String>();
+        List<Car__c> cars = [SELECT Id, Showroom__r.Name FROM Car__c WHERE Id IN :carIds];
+        Map<Id, String> carToShowroomNameMap = new Map<Id, String>();
         for(Car__c car : cars){
-            carToShowroomNameMap.put(car, car.Showroom__r.Name);
+            carToShowroomNameMap.put(car.Id, car.Showroom__r.Name);
         }
 
         List<Car_To_Showroom__c> carToShowroomsList = [SELECT Id, Car__c, Showroom__c FROM Car_To_Showroom__c 
@@ -44,7 +44,7 @@ public class CarToShowroomHandler1 {
                     existingCarAtShowrooms.put(carToShowroom.Car__c, carToShowroom.Id);
                 }
                 else if(existingCarToShowroomId != carToShowroom.ID){
-                    String name = carToShowroomNameMap.get(carToShowroom.Car__r);
+                    String name = carToShowroomNameMap.get(carToShowroom.Car__c);
                     carToShowroom.addError(
                         Constants.ALREADY_AVAILABLE_ERROR + ' ' + name);
                 }

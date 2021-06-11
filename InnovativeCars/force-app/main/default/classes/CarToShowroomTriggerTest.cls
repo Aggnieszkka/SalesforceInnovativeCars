@@ -45,7 +45,7 @@ public class CarToShowroomTriggerTest {
          
         for(Integer i = 0; i<151; i++){
             System.assert(testResult[i].isSuccess());
-            System.assert(testResult[i++].getErrors().size() == 0);
+            System.assert(testResult[i].getErrors().size() == 0);
         }
 
     }
@@ -92,7 +92,7 @@ public class CarToShowroomTriggerTest {
         for(Integer i=0; i<151; i++){
             System.assert(!testResult[i].isSuccess());
             System.assert(testResult[i].getErrors().size() > 0);
-            System.assertEquals(Constants.ALREADY_AVAILABLE_ERROR,
+            System.assertEquals(Constants.ALREADY_AVAILABLE_ERROR + ' ' + testShowrooms[0].Name,
                                  testResult[i].getErrors()[0].getMessage());
         }
     }
