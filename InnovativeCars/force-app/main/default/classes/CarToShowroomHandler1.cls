@@ -16,12 +16,15 @@ public class CarToShowroomHandler1 {
     */
     public static void checkIfCarIsAlreadyAvailable(List<Car_To_Showroom__c> newOffers) {
         Set<Id> carIds = new Set<Id>();
+        Set<Id> showroomIds = new Set<Id>();
         for(Car_To_Showroom__c newOffer : newOffers) {
             if(newOffer.Availability__c == Constants.PICKLIST_AVAILABLE) {
                 carIds.add(newOffer.Car__c);
+                showroomIds.add(newOffer.Showroom__c);
             }
         }
 
+        Map<Id, Showroom__c> showroomsMap = new Map<Id, Showroom__c>([SELECT Id, Name FROM Showroom__c WHERE Id IN :showroomIds]);
         List<Car__c> cars = [SELECT Id, Showroom__r.Name FROM Car__c WHERE Id IN :carIds];
         Map<Id, String> carToShowroomNameMap = new Map<Id, String>();
         for(Car__c car : cars){
@@ -39,11 +42,15 @@ public class CarToShowroomHandler1 {
         
         for (Car_To_Showroom__c carToShowroom : newOffers){
             if(carToShowroom.Availability__c == Constants.PICKLIST_AVAILABLE){
-                Id existingCarToShowroomId = existingCarAtShowrooms.get(carToShowroom.Car__c);
-                if(existingCarToShowroomId == null){
+                if(!existingCarAtShowrooms.containsKey(carToShowroom.Car__c)){
                     existingCarAtShowrooms.put(carToShowroom.Car__c, carToShowroom.Id);
+                    String showroomName = showroomsMap.get(carToShowroom.Showroom__c).Name;
+                    carToShowroomNameMap.put(carToShowroom.Car__c, showroomName);
+                    continue;
                 }
-                else if(existingCarToShowroomId != carToShowroom.ID){
+                
+                Id existingCarToShowroomId = existingCarAtShowrooms.get(carToShowroom.Car__c);
+                if(existingCarToShowroomId != carToShowroom.ID || existingCarToShowroomId == null){
                     String name = carToShowroomNameMap.get(carToShowroom.Car__c);
                     carToShowroom.addError(
                         Constants.ALREADY_AVAILABLE_ERROR + ' ' + name);
