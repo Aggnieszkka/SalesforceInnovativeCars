@@ -156,4 +156,29 @@ public class ShowroomTriggerTest {
         System.assertEquals(Constants.LESS_THAN_CARS_AVAILABLE_ERROR,
                              testResult[0].getErrors()[0].getMessage());
     }
+    /**
+    * @author Agnieszka Ząbkowicz
+    * @date 06.2021
+    *
+    * @description method testing changing number of car spaces in a showroom
+    * to less than zero
+    */
+    @isTest static void testLessThanZeroCarSpaces(){
+        List<Showroom__c> showrooms = TestFactory.createShowrooms(151);
+        
+        for(Integer i=0; i<151; i++){
+            showrooms[i].Car_Spaces__c = -1;
+        }
+        
+        Test.startTest();
+		Database.SaveResult[] testResult = Database.update(showrooms, false);
+        Test.stopTest();
+        
+        for(Integer i=0; i<151; i++){
+        	System.assert(!testResult[i].isSuccess());
+        	System.assert(testResult[i].getErrors().size() > 0);
+            System.assertEquals(Constants.LESS_THAN_ZERO_ERROR,
+                             testResult[0].getErrors()[0].getMessage());
+        }
+    }
 }
