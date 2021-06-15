@@ -1,6 +1,18 @@
+/**
+* @author Agnieszka Ząbkowicz
+* @date 06.2021
+*
+* @description test class for DeleteOldTelemetries class
+*/
 @isTest
 public class DeleteOldTelemetriesTest {
 
+    /**
+    * @author Agnieszka Ząbkowicz
+    * @date 06.2021
+    *
+    * @description method testing deleting telemetries older than 90 days
+    */
     @isTest static void deleteOldTelemetries(){
         List<Telemetry__c> telemetries = TestFactory.createTelemetries(151);
         
@@ -20,6 +32,12 @@ public class DeleteOldTelemetriesTest {
         System.assertEquals(0, [SELECT count() FROM Telemetry__c WHERE Id IN :telemetriesIds]);
     }
 
+    /**
+    * @author Agnieszka Ząbkowicz
+    * @date 06.2021
+    *
+    * @description method testing running scheduler for deleting old telemetries
+    */
     @isTest static void runScheduler(){
         Test.startTest();
         String jobId = System.schedule('ScheduledApexTest',
