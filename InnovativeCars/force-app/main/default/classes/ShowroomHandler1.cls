@@ -111,4 +111,23 @@ public class ShowroomHandler1 {
                 }
             }
     }
+
+    /**
+    * @author Agnieszka Ząbkowicz
+    * @date 06.2021
+    *
+    * @description method selecting closed showrooms from new showrooms
+    * and sending them to a class responsible for sending request to a renovation team
+    * @param newShowrooms list of showroom objects
+    */
+    public static void SendRequestForClosedShowrooms(List<Showroom__c> newShowrooms) {
+        List<Showroom__c> closedShowrooms = new List<Showroom__c>();
+        for(Showroom__c showroom : newShowrooms){
+            if(showroom.Status__c == Constants.PICKLIST_CLOSED){
+                closedShowrooms.add(showroom);
+            }
+        }
+        RenovationTeamRequestSender request = new RenovationTeamRequestSender(closedShowrooms);
+        System.enqueueJob(request);
+    }
 }

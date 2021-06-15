@@ -91,4 +91,22 @@ public class CarToShowroomHandler1 {
             }
         }
     }
+
+    /**
+    * @author Agnieszka Ząbkowicz
+    * @date 06.2021
+    *
+    * @description method getting offer's IDs from a list of offers
+    * and sending it to method which sends email
+    * @param newOffers list of offers objects
+    */
+    public static void sendEmailAboutNewOffers(List<Car_To_Showroom__c> newOffers) {
+
+            List<Id> offerIds = new List<Id>();
+            for(Car_To_Showroom__c carToShowroom : newOffers){
+                offerIds.add(carToShowroom.Id);
+            }
+    
+            NewOffersEmailSender.sendEmail(offerIds);   
+    }
 }

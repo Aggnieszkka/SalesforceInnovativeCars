@@ -95,4 +95,24 @@ public class TestFactory {
         insert newAccounts;
         return newAccounts;
     }
+
+    /**
+    * @author Agnieszka Ząbkowicz
+    * @date 06.2021
+    *
+    * @description method for delivering telemetries for tests
+    * @param number of telemetries to create and add to database
+    * @return list of created telemetries
+    */
+    public static List<Telemetry__c> createTelemetries(Integer telemetriesNumber){
+        List<Car__c> cars = createCars(1);
+        List<Telemetry__c> telemetries = new List<Telemetry__c>();
+        
+        for(Integer i = 0; i < telemetriesNumber; i++){
+            Telemetry__c telemetry = new Telemetry__c(Type__c = 'Temperature', Car__c = cars[0].Id);
+            telemetries.add(telemetry);
+        }
+        insert telemetries;
+        return telemetries;
+    }
 }
