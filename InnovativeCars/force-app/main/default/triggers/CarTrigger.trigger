@@ -1,7 +1,6 @@
 /**
 * @author Agnieszka Ząbkowicz
-* @date 06.2021
-*
+* @date 11.06.2021
 * @description trigger handling:
 * - check if there is space in showroom for a car before inserting and updating
 * - creating utilization reports and deleting telemetries when car is being deleted

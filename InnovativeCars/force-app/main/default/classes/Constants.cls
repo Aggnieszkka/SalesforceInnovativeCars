@@ -1,3 +1,8 @@
+/**
+* @author Agnieszka Ząbkowicz
+* @date 11.06.2021
+* @description class storing constants
+*/
 public class Constants {
     public static final String TEST_ACCOUNT_NAME = 'Super Cars';
     public static final String TEST_CAR_NAME = 'Super fast cars';
@@ -18,11 +23,10 @@ public class Constants {
     public static final String TELEMETRIES_DELETED_MESSAGE = 'Telemetries older than 90 days deleted successfully';
     public static final String EMAIL_SEND_SUCCESSFULLY_MESSAGE = 'The email was sent successfully.';
     public static final String EMAIL_SEND_FAILED_MESSAGE = 'The email failed to send: ';
-    public static final String NEW_OFFERS_EMAIL_ADDRESS = 'noviv37645@0ranges.com';
     public static final String NEW_OFFERS_EMAIL_SUBJECT = 'New offers added!';
     public static final String NEW_OFFERS_EMAIL_BODY = 'New offers have been added to showrooms. Number of offers: ';
-    public static final String CASE_SUBJECT = 'Renovation Case ';
-    public static final String CASE_ORIGIN = 'Web';
+    public static final String CASE_SUBJECT_RENOVATION = 'Renovation Case ';
+    public static final String CASE_ORIGIN_WEB = 'Web';
     public static final String RENOVATION_ENDPOINT = 'https://jsonplaceholder.typicode.com/posts';
     public static final String CONNECTION_FAILED_MESSAGE = 'Connection failed';
     public static final String CRON_EXP = '0 0 0 15 6 ? *';

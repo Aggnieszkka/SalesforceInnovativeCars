@@ -1,7 +1,6 @@
 /**
 * @author Agnieszka Ząbkowicz
-* @date 06.2021
-*
+* @date 15.06.2021
 * @description test class for DeleteOldTelemetries class
 */
 @isTest
@@ -9,8 +8,7 @@ public class DeleteOldTelemetriesTest {
 
     /**
     * @author Agnieszka Ząbkowicz
-    * @date 06.2021
-    *
+    * @date 15.06.2021
     * @description method testing deleting telemetries older than 90 days
     */
     @isTest static void deleteOldTelemetries(){
@@ -25,29 +23,10 @@ public class DeleteOldTelemetriesTest {
         List<Id> telemetriesIds = new List<Id>(IdToTelemetryMap.keySet());
       
         Test.startTest();
-            DeleteOldTelemetries deleteOld = new DeleteOldTelemetries();
-        	Id batchId = Database.executeBatch(deleteOld);
+        DeleteOldTelemetries deleteOld = new DeleteOldTelemetries();
+        Id batchId = Database.executeBatch(deleteOld);
         Test.stopTest();
 
         System.assertEquals(0, [SELECT count() FROM Telemetry__c WHERE Id IN :telemetriesIds]);
-    }
-
-    /**
-    * @author Agnieszka Ząbkowicz
-    * @date 06.2021
-    *
-    * @description method testing running scheduler for deleting old telemetries
-    */
-    @isTest static void runScheduler(){
-        Test.startTest();
-        String jobId = System.schedule('ScheduledApexTest',
-         Constants.CRON_EXP,
-         new DeleteOldTelemtriesScheduler());
-        Test.stopTest();
-
-        CronTrigger cronTrigger = [SELECT Id, CronExpression, TimesTriggered, NextFireTime
-            FROM CronTrigger WHERE id = :jobId];
- 
-        System.assertEquals(Constants.CRON_EXP, cronTrigger.CronExpression);
     }
 }

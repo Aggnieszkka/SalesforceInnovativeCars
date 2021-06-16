@@ -1,7 +1,6 @@
 /**
 * @author Agnieszka Ząbkowicz
-* @date 06.2021
-*
+* @date 11.06.2021
 * @description class for delivering data for tests
 */
 @isTest
@@ -9,8 +8,7 @@ public class TestFactory {
 
     /**
     * @author Agnieszka Ząbkowicz
-    * @date 06.2021
-    *
+    * @date 11.06.2021
     * @description method for delivering cars for tests
     * @param number of cars to create and add to database
     * @return list of created cars
@@ -55,8 +53,7 @@ public class TestFactory {
     
     /**
     * @author Agnieszka Ząbkowicz
-    * @date 06.2021
-    *
+    * @date 11.06.2021
     * @description method for delivering showrooms for tests
     * @param number of showrooms to create and add to database
     * @return list of created showrooms
@@ -83,8 +80,7 @@ public class TestFactory {
     
     /**
     * @author Agnieszka Ząbkowicz
-    * @date 06.2021
-    *
+    * @date 11.06.2021
     * @description method for creating an account for cars and showrooms
     * to be assigned to
     * @return list containing created account
@@ -98,8 +94,7 @@ public class TestFactory {
 
     /**
     * @author Agnieszka Ząbkowicz
-    * @date 06.2021
-    *
+    * @date 15.06.2021
     * @description method for delivering telemetries for tests
     * @param number of telemetries to create and add to database
     * @return list of created telemetries

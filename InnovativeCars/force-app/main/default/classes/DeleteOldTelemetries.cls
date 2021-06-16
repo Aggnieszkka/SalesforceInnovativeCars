@@ -1,14 +1,12 @@
 /**
 * @author Agnieszka Ząbkowicz
-* @date 06.2021
-*
+* @date 15.06.2021
 * @description class for deleting telemetries older than 90 days
 */
 public class DeleteOldTelemetries implements Database.Batchable<sObject> {
 
     public Database.QueryLocator start(Database.BatchableContext bc) {
         date d = system.today().adddays(-90);
-        List<Telemetry__c> tel = [SELECT Id FROM Telemetry__c WHERE DAY_ONLY(CreatedDate) <= :d];
         return Database.getQueryLocator(
             'SELECT Id FROM Telemetry__c WHERE DAY_ONLY(CreatedDate) <= :d'
         );

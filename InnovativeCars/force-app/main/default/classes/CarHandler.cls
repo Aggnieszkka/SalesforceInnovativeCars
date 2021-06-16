@@ -1,14 +1,12 @@
 /**
 * @author Agnieszka Ząbkowicz
-* @date 06.2021
-*
+* @date 11.06.2021
 * @description handler for CarTrigger
 */
 public class CarHandler {
     /**
     * @author Agnieszka Ząbkowicz
-    * @date 06.2021
-    *
+    * @date 11.06.2021
     * @description method checking if there is space in showroom for a car 
     * and adding error to car when appropriate
     * @param newCars list of car objects to check
@@ -58,8 +56,7 @@ public class CarHandler {
     
     /**
     * @author Agnieszka Ząbkowicz
-    * @date 06.2021
-    *
+    * @date 11.06.2021
     * @description method creating new utilization report object based on list of deleted cars
     * @param deletedCars list of car objects to create reports for
     */
@@ -75,8 +72,7 @@ public class CarHandler {
     
     /**
     * @author Agnieszka Ząbkowicz
-    * @date 06.2021
-    *
+    * @date 11.06.2021
     * @description method deleting telemetries of deleted cars
     * @param deletedCars list of car objects
     */

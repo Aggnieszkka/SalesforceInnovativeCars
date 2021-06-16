@@ -1,7 +1,6 @@
 /**
 * @author Agnieszka Ząbkowicz
-* @date 06.2021
-*
+* @date 15.06.2021
 * @description class for scheduling deleting old telemetries
 */
 global class DeleteOldTelemtriesScheduler implements Schedulable{

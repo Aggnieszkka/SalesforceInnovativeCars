@@ -1,7 +1,6 @@
 /**
 * @author Agnieszka Ząbkowicz
-* @date 06.2021
-*
+* @date 11.06.2021
 * @description trigger handling:
 * - check if there is only one warehouse for each account
 * - check if showroom is empty before closing it
@@ -12,14 +11,14 @@ trigger ShowroomTrigger on Showroom__c (before insert, before update, after inse
     
     if(trigger.isBefore){
     	if(trigger.isInsert || trigger.isUpdate){
-        	ShowroomHandler1.checkIfOnlyOneWarehouse(Trigger.New);
-            ShowroomHandler1.checkIfShowroomIsEmptyBeforeClosing(Trigger.New);
-            ShowroomHandler1.checkEditingNumberOfCarSpaces(Trigger.New);
+        	ShowroomHandler.checkIfOnlyOneWarehouse(Trigger.New);
+            ShowroomHandler.checkIfShowroomIsEmptyBeforeClosing(Trigger.New);
+            ShowroomHandler.checkEditingNumberOfCarSpaces(Trigger.New);
         }
     }
     if(trigger.isAfter){
     	if(trigger.isInsert || trigger.isUpdate){
-            ShowroomHandler1.SendRequestForClosedShowrooms(Trigger.New);
+            ShowroomHandler.SendRequestForClosedShowrooms(Trigger.New);
         }
     }
 }

@@ -1,7 +1,6 @@
 /**
 * @author Agnieszka Ząbkowicz
-* @date 06.2021
-*
+* @date 11.06.2021
 * @description test class for CarToShowroomTrigger
 */
 @isTest
@@ -9,8 +8,7 @@ public class CarToShowroomTriggerTest {
     
     /**
     * @author Agnieszka Ząbkowicz
-    * @date 06.2021
-    *
+    * @date 11.06.2021
     * @description method testing adding new offers to cars which
     * are already available at the showroom
     */
@@ -52,8 +50,7 @@ public class CarToShowroomTriggerTest {
     
     /**
     * @author Agnieszka Ząbkowicz
-    * @date 06.2021
-    *
+    * @date 11.06.2021
     * @description method testing adding new offers to cars which
     * are already available at the showroom and already have their offers
     */
@@ -99,8 +96,7 @@ public class CarToShowroomTriggerTest {
     
     /**
     * @author Agnieszka Ząbkowicz
-    * @date 06.2021
-    *
+    * @date 11.06.2021
     * @description method testing adding new offers clones (for the same
     * showroom and the same car) to cars which are already available at 
     * the showroom and already have their offers
@@ -136,8 +132,7 @@ public class CarToShowroomTriggerTest {
    
     /**
     * @author Agnieszka Ząbkowicz
-    * @date 06.2021
-    *
+    * @date 11.06.2021
     * @description method testing adding new offers to cars which
     * are not available at the showroom
     */

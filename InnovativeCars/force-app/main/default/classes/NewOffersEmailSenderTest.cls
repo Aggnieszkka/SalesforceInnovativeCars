@@ -1,7 +1,6 @@
 /**
 * @author Agnieszka Ząbkowicz
-* @date 06.2021
-*
+* @date 15.06.2021
 * @description test class for NewOffersEmailSender
 */
 @isTest
@@ -9,8 +8,7 @@ public class NewOffersEmailSenderTest {
 
     /**
     * @author Agnieszka Ząbkowicz
-    * @date 06.2021
-    *
+    * @date 15.06.2021
     * @description method testing sending email
     */
     @isTest static void testSendingEmail(){
