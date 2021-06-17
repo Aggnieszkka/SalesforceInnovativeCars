@@ -12,25 +12,23 @@ public class RenovationTeamRequestSender implements Queueable, Database.AllowsCa
     }
 
     public void execute(QueueableContext context){
-        if(!Test.isRunningTest()){
-            Http server = new Http();
-            HttpRequest req = new HttpRequest();
-            req.setEndpoint(Constants.RENOVATION_ENDPOINT);
-            req.setMethod('POST');
-            req.setBody(JSON.serialize(newCases)); 
-            HttpResponse resp = server.send(req);
-            if(resp.getStatusCode() == 201){
-                for(Case newCase : newCases){
-                    newCase.Status = Constants.PICKLIST_CLOSED;
-                }
+        Http server = new Http();
+        HttpRequest req = new HttpRequest();
+        req.setEndpoint(Constants.RENOVATION_ENDPOINT);
+        req.setMethod('POST');
+        req.setBody(JSON.serialize(newCases)); 
+        HttpResponse resp = server.send(req);
+        if(resp.getStatusCode() == 201){
+            for(Case newCase : newCases){
+                newCase.Status = Constants.PICKLIST_CLOSED;
             }
-            else{
-                for(Case newCase : newCases){
-                    newCase.Status = Constants.PICKLIST_FAILED;
-                }
-                System.debug(LoggingLevel.ERROR, Constants.CONNECTION_FAILED_MESSAGE);
-            }
-            update newCases;
         }
+        else{
+            for(Case newCase : newCases){
+                newCase.Status = Constants.PICKLIST_FAILED;
+            }
+            System.debug(LoggingLevel.ERROR, Constants.CONNECTION_FAILED_MESSAGE);
+        }
+        update newCases;
     }
 }
