@@ -111,8 +111,9 @@ public class ShowroomHandler {
     /**
     * @author Agnieszka Ząbkowicz
     * @date 11.06.2021
-    * @description method selecting closed showrooms from new showrooms
-    * and sending them to a class responsible for sending request to a renovation team
+    * @description method selecting closed showrooms from new showrooms,
+    * creating new cases and sending them to a class responsible for sending 
+    * request to a renovation team
     * @param newShowrooms list of showroom objects
     */
     public static void SendRequestForClosedShowrooms(List<Showroom__c> newShowrooms) {
@@ -122,7 +123,7 @@ public class ShowroomHandler {
                 closedShowrooms.add(showroom);
             }
         }
-        RenovationTeamRequestSender request = new RenovationTeamRequestSender(closedShowrooms);
+        RenovationTeamCaseCreator request = new RenovationTeamCaseCreator(closedShowrooms);
         System.enqueueJob(request);
     }
 }

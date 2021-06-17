@@ -6,15 +6,15 @@
 public class DeleteOldTelemetries implements Database.Batchable<sObject> {
 
     public Database.QueryLocator start(Database.BatchableContext bc) {
-        date d = system.today().adddays(-90);
+        date oldDate = system.today().adddays(-90);
         return Database.getQueryLocator(
-            'SELECT Id FROM Telemetry__c WHERE DAY_ONLY(CreatedDate) <= :d'
+            'SELECT Id FROM Telemetry__c WHERE DAY_ONLY(CreatedDate) <= :oldDate'
         );
     }
     public void execute(Database.BatchableContext bc, List<sObject> records){
         delete records;
     }
     public void finish(Database.BatchableContext bc){
-        System.debug(Constants.TELEMETRIES_DELETED_MESSAGE);
+        System.debug(LoggingLevel.INFO, Constants.TELEMETRIES_DELETED_MESSAGE);
     }
 }

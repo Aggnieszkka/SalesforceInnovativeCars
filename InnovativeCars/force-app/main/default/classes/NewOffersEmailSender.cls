@@ -23,9 +23,9 @@ public class NewOffersEmailSender {
                                  new Messaging.SingleEmailMessage[] { mail });
 
         if (results[0].success) {
-            System.debug(Constants.EMAIL_SEND_SUCCESSFULLY_MESSAGE);
+            System.debug(LoggingLevel.INFO, Constants.EMAIL_SEND_SUCCESSFULLY_MESSAGE);
         } else {
-            System.debug(Constants.EMAIL_SEND_FAILED_MESSAGE + results[0].errors[0].message);
+            System.debug(LoggingLevel.ERROR, Constants.EMAIL_SEND_FAILED_MESSAGE + results[0].errors[0].message);
         }
     }
 }

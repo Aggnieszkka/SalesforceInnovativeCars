@@ -94,12 +94,12 @@ public class CarToShowroomHandler {
     * @date 15.06.2021
     * @description method getting offer's IDs from a list of offers
     * and sending it to method which sends email
-    * @param newOffers list of offers objects
+    * @param inNewOffers list of offers objects
     */
-    public static void sendEmailAboutNewOffers(List<Car_To_Showroom__c> newOffers) {
+    public static void sendEmailAboutNewOffers(List<Car_To_Showroom__c> inNewOffers) {
 
             List<Id> offerIds = new List<Id>();
-            for(Car_To_Showroom__c carToShowroom : newOffers){
+            for(Car_To_Showroom__c carToShowroom : inNewOffers){
                 offerIds.add(carToShowroom.Id);
             }
     

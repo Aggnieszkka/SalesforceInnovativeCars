@@ -10,7 +10,7 @@ public class TestFactory {
     * @author Agnieszka Ząbkowicz
     * @date 11.06.2021
     * @description method for delivering cars for tests
-    * @param number of cars to create and add to database
+    * @param carsNumber number of cars to create and add to database
     * @return list of created cars
     */
     public static List<Car__c> createCars(Integer carsNumber){
@@ -55,7 +55,7 @@ public class TestFactory {
     * @author Agnieszka Ząbkowicz
     * @date 11.06.2021
     * @description method for delivering showrooms for tests
-    * @param number of showrooms to create and add to database
+    * @param showroomsNumber number of showrooms to create and add to database
     * @return list of created showrooms
     */
     public static List<Showroom__c> createShowrooms(Integer showroomsNumber){
@@ -96,7 +96,7 @@ public class TestFactory {
     * @author Agnieszka Ząbkowicz
     * @date 15.06.2021
     * @description method for delivering telemetries for tests
-    * @param number of telemetries to create and add to database
+    * @param telemetriesNumber number of telemetries to create and add to database
     * @return list of created telemetries
     */
     public static List<Telemetry__c> createTelemetries(Integer telemetriesNumber){

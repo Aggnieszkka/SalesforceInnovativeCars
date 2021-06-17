@@ -5,23 +5,14 @@
 * when a showroom is being closed
 */
 public class RenovationTeamRequestSender implements Queueable, Database.AllowsCallouts{
-    private List<Showroom__c> closedShowrooms;
+    private List<Case> newCases;
 
-    public RenovationTeamRequestSender(List<Showroom__c> showrooms){
-        this.closedShowrooms = showrooms;
+    public RenovationTeamRequestSender(List<Case> cases){
+        this.newCases = cases;
     }
 
     public void execute(QueueableContext context){
         if(!Test.isRunningTest()){
-            List<Case> newCases = new List<Case>();
-            for(Showroom__c showroom : closedShowrooms){
-                newCases.add(new Case(
-                    Subject = Constants.CASE_SUBJECT_RENOVATION + showroom.Name, 
-                    Showroom__c = showroom.Id, 
-                    Origin = Constants.CASE_ORIGIN_WEB
-                    ));
-            }
-
             Http server = new Http();
             HttpRequest req = new HttpRequest();
             req.setEndpoint(Constants.RENOVATION_ENDPOINT);
@@ -39,7 +30,7 @@ public class RenovationTeamRequestSender implements Queueable, Database.AllowsCa
                 }
                 System.debug(LoggingLevel.ERROR, Constants.CONNECTION_FAILED_MESSAGE);
             }
-            insert newCases;
+            update newCases;
         }
     }
 }
