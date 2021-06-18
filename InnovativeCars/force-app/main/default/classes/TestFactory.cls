@@ -10,10 +10,10 @@ public class TestFactory {
     * @author Agnieszka Ząbkowicz
     * @date 11.06.2021
     * @description method for delivering cars for tests
-    * @param carsNumber number of cars to create and add to database
+    * @param inCarsNumber number of cars to create and add to database
     * @return list of created cars
     */
-    public static List<Car__c> createCars(Integer carsNumber){
+    public static List<Car__c> createCars(Integer inCarsNumber){
 
         List<Account> accounts = [SELECT Id FROM Account WHERE Name = :Constants.TEST_ACCOUNT_NAME];
         if(accounts.size() == 0){
@@ -22,7 +22,7 @@ public class TestFactory {
         
         List<Car__c> cars = new List<Car__c>();
         Car__c newCar = new Car__c();
-        for(Integer i = 0; i < carsNumber; i++){
+        for(Integer i = 0; i < inCarsNumber; i++){
             if(i<10){
             	newCar = new Car__c(Serial_Number__c = '00000'+i, Account__c = accounts[0].Id);
             }
@@ -55,10 +55,10 @@ public class TestFactory {
     * @author Agnieszka Ząbkowicz
     * @date 11.06.2021
     * @description method for delivering showrooms for tests
-    * @param showroomsNumber number of showrooms to create and add to database
+    * @param inShowroomsNumber number of showrooms to create and add to database
     * @return list of created showrooms
     */
-    public static List<Showroom__c> createShowrooms(Integer showroomsNumber){
+    public static List<Showroom__c> createShowrooms(Integer inShowroomsNumber){
 
         List<Account> accounts = [SELECT Id FROM Account WHERE Name = :Constants.TEST_ACCOUNT_NAME];
         if(accounts.size() == 0){
@@ -66,7 +66,7 @@ public class TestFactory {
         }
 
         List<Showroom__c> showrooms = new List<Showroom__c>();
-        for(Integer i = 0; i < showroomsNumber; i++){
+        for(Integer i = 0; i < inShowroomsNumber; i++){
             Showroom__c newShowroom = new Showroom__c(
                 Name = Constants.TEST_CAR_NAME + i, 
                 Type__c = Constants.PICKLIST_PERSONAL_CARS, 
@@ -96,14 +96,14 @@ public class TestFactory {
     * @author Agnieszka Ząbkowicz
     * @date 15.06.2021
     * @description method for delivering telemetries for tests
-    * @param telemetriesNumber number of telemetries to create and add to database
+    * @param inTelemetriesNumber number of telemetries to create and add to database
     * @return list of created telemetries
     */
-    public static List<Telemetry__c> createTelemetries(Integer telemetriesNumber){
+    public static List<Telemetry__c> createTelemetries(Integer inTelemetriesNumber){
         List<Car__c> cars = createCars(1);
         List<Telemetry__c> telemetries = new List<Telemetry__c>();
         
-        for(Integer i = 0; i < telemetriesNumber; i++){
+        for(Integer i = 0; i < inTelemetriesNumber; i++){
             Telemetry__c telemetry = new Telemetry__c(Type__c = 'Temperature', Car__c = cars[0].Id);
             telemetries.add(telemetry);
         }

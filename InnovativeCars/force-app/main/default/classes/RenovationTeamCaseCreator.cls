@@ -12,17 +12,17 @@ public class RenovationTeamCaseCreator implements Queueable, Database.AllowsCall
     }
 
     public void execute(QueueableContext context){
+        List<Case> newCases = new List<Case>();
+        for(Showroom__c showroom : closedShowrooms){
+            newCases.add(new Case(
+                Subject = Constants.CASE_SUBJECT_RENOVATION + showroom.Name, 
+                Showroom__c = showroom.Id, 
+                Origin = Constants.CASE_ORIGIN_WEB
+                ));
+        }
+        insert newCases;
+        RenovationTeamRequestSender request = new RenovationTeamRequestSender(newCases);
         if(!Test.isRunningTest()){
-            List<Case> newCases = new List<Case>();
-            for(Showroom__c showroom : closedShowrooms){
-                newCases.add(new Case(
-                    Subject = Constants.CASE_SUBJECT_RENOVATION + showroom.Name, 
-                    Showroom__c = showroom.Id, 
-                    Origin = Constants.CASE_ORIGIN_WEB
-                    ));
-            }
-            insert newCases;
-            RenovationTeamRequestSender request = new RenovationTeamRequestSender(newCases);
             System.enqueueJob(request);
         }
     }
