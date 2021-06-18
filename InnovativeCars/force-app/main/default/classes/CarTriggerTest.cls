@@ -1,7 +1,6 @@
 /**
 * @author Agnieszka Ząbkowicz
-* @date 06.2021
-*
+* @date 11.06.2021
 * @description test class for CarTrigger
 */
 @isTest
@@ -9,8 +8,7 @@ public class CarTriggerTest {
 
     /**
     * @author Agnieszka Ząbkowicz
-    * @date 06.2021
-    *
+    * @date 11.06.2021
     * @description method testing adding new cars available at the showroom
     * where are enough car spaces
     */
@@ -40,8 +38,7 @@ public class CarTriggerTest {
     
     /**
     * @author Agnieszka Ząbkowicz
-    * @date 06.2021
-    *
+    * @date 11.06.2021
     * @description method testing adding new cars available at the showroom
     * where are not enough car spaces
     */
@@ -70,8 +67,7 @@ public class CarTriggerTest {
     
     /**
     * @author Agnieszka Ząbkowicz
-    * @date 06.2021
-    *
+    * @date 11.06.2021
     * @description method testing deleting cars with telemetries
     */
     @isTest static void testCarDeleting(){

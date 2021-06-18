@@ -1,7 +1,6 @@
 /**
 * @author Agnieszka Ząbkowicz
-* @date 06.2021
-*
+* @date 11.06.2021
 * @description test class for ShowroomTrigger
 */
 @isTest
@@ -9,8 +8,7 @@ public class ShowroomTriggerTest {
 
     /**
     * @author Agnieszka Ząbkowicz
-    * @date 06.2021
-    *
+    * @date 11.06.2021
     * @description method testing closing showroom when there are no cars in it
     */
     @isTest static void testClosingEmptyShowroom() {
@@ -33,8 +31,7 @@ public class ShowroomTriggerTest {
     
     /**
     * @author Agnieszka Ząbkowicz
-    * @date 06.2021
-    *
+    * @date 11.06.2021
     * @description method testing closing showroom when there are cars in it
     */
     @isTest static void testClosingNotEmptyShowroom() {
@@ -64,8 +61,7 @@ public class ShowroomTriggerTest {
         
     /**
     * @author Agnieszka Ząbkowicz
-    * @date 06.2021
-    *
+    * @date 11.06.2021
     * @description method testing adding first showroom as a warehouse to an account
     */
     @isTest static void CheckFirstWarehouseToAccount(){
@@ -82,8 +78,7 @@ public class ShowroomTriggerTest {
     
     /**
     * @author Agnieszka Ząbkowicz
-    * @date 06.2021
-    *
+    * @date 11.06.2021
     * @description method testing adding second showroom as a warehouse to an account
     */
     @isTest static void CheckSecondWarehouseToAccount(){
@@ -105,8 +100,7 @@ public class ShowroomTriggerTest {
     
     /**
     * @author Agnieszka Ząbkowicz
-    * @date 06.2021
-    *
+    * @date 11.06.2021
     * @description method testing changing number of car spaces in a showroom
     * to a number equal to number of cars available at the showroom
     */
@@ -131,8 +125,7 @@ public class ShowroomTriggerTest {
     
     /**
     * @author Agnieszka Ząbkowicz
-    * @date 06.2021
-    *
+    * @date 11.06.2021
     * @description method testing changing number of car spaces in a showroom
     * to a number lower than number of cars available at the showroom
     */
@@ -158,8 +151,7 @@ public class ShowroomTriggerTest {
     }
     /**
     * @author Agnieszka Ząbkowicz
-    * @date 06.2021
-    *
+    * @date 11.06.2021
     * @description method testing changing number of car spaces in a showroom
     * to less than zero
     */

@@ -1,15 +1,13 @@
 /**
 * @author Agnieszka Ząbkowicz
-* @date 06.2021
-*
+* @date 11.06.2021
 * @description handler for ShowroomTrigger
 */
-public class ShowroomHandler1 {
+public class ShowroomHandler {
 
     /**
     * @author Agnieszka Ząbkowicz
-    * @date 06.2021
-    *
+    * @date 11.06.2021
     * @description method checking if there is only one warehouse per each account 
     * and adding error when appropriate
     * @param newShowrooms list of showroom objects to check
@@ -47,8 +45,7 @@ public class ShowroomHandler1 {
     
     /**
     * @author Agnieszka Ząbkowicz
-    * @date 06.2021
-    *
+    * @date 11.06.2021
     * @description method checking if there are no cars available at showroom before closing 
     * and adding error when appropriate
     * @param newShowrooms list of showroom objects to check
@@ -79,8 +76,7 @@ public class ShowroomHandler1 {
     
     /**
     * @author Agnieszka Ząbkowicz
-    * @date 06.2021
-    *
+    * @date 11.06.2021
     * @description method checking if number of car spaces in showroom is equal or greater than zero
 	* or number of cars available at the showroom and adding error when appropriate
     * @param newShowrooms list of showroom objects to check
@@ -110,5 +106,24 @@ public class ShowroomHandler1 {
                                Constants.LESS_THAN_CARS_AVAILABLE_ERROR);
                 }
             }
+    }
+
+    /**
+    * @author Agnieszka Ząbkowicz
+    * @date 11.06.2021
+    * @description method selecting closed showrooms from new showrooms,
+    * creating new cases and sending them to a class responsible for sending 
+    * request to a renovation team
+    * @param newShowrooms list of showroom objects
+    */
+    public static void SendRequestForClosedShowrooms(List<Showroom__c> newShowrooms) {
+        List<Showroom__c> closedShowrooms = new List<Showroom__c>();
+        for(Showroom__c showroom : newShowrooms){
+            if(showroom.Status__c == Constants.PICKLIST_CLOSED){
+                closedShowrooms.add(showroom);
+            }
+        }
+        RenovationTeamCaseCreator request = new RenovationTeamCaseCreator(closedShowrooms);
+        System.enqueueJob(request);
     }
 }

@@ -1,15 +1,13 @@
 /**
 * @author Agnieszka Ząbkowicz
-* @date 06.2021
-*
+* @date 11.06.2021
 * @description handler for CarToShowroomTrigger
 */
-public class CarToShowroomHandler1 {
+public class CarToShowroomHandler {
     
     /**
     * @author Agnieszka Ząbkowicz
-    * @date 06.2021
-    *
+    * @date 11.06.2021
     * @description method checking if car is already available in showroom 
     * and adding error when appropriate
     * @param newOffers list of offers objects to check
@@ -61,8 +59,7 @@ public class CarToShowroomHandler1 {
     
     /**
     * @author Agnieszka Ząbkowicz
-    * @date 06.2021
-    *
+    * @date 11.06.2021
     * @description method checking before adding new offer if the car is in the showroom
     * @param newOffers list of offers objects to check
     */
@@ -90,5 +87,22 @@ public class CarToShowroomHandler1 {
                 }
             }
         }
+    }
+
+    /**
+    * @author Agnieszka Ząbkowicz
+    * @date 15.06.2021
+    * @description method getting offer's IDs from a list of offers
+    * and sending it to method which sends email
+    * @param inNewOffers list of offers objects
+    */
+    public static void sendEmailAboutNewOffers(List<Car_To_Showroom__c> inNewOffers) {
+
+            List<Id> offerIds = new List<Id>();
+            for(Car_To_Showroom__c carToShowroom : inNewOffers){
+                offerIds.add(carToShowroom.Id);
+            }
+    
+            NewOffersEmailSender.sendEmail(offerIds);   
     }
 }
