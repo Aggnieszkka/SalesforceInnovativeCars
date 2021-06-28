@@ -80,4 +80,49 @@ public class CarHandler {
     		List<Telemetry__c> telemetries = [SELECT Id FROM Telemetry__c WHERE Car__c IN :deletedCars];
     		delete telemetries;
     }
+    
+    public static Map<Boolean, List<Car__c>> divideByDestination(List<Car__c> deletedCars){
+        Map<Boolean, List<Car__c>> destinationMap = new Map<Boolean, List<Car__c>>();
+        destinationMap.put(false, new List<Car__c>());
+        destinationMap.put(true, new List<Car__c>());
+        
+        for(Car__c car : deletedCars){
+            Boolean isAnotherConsortiumInterested = car.Is_Another_Consortium_Interested__c != null && car.Is_Another_Consortium_Interested__c;
+        	List<Car__c> temporaryList = destinationMap.get(isAnotherConsortiumInterested);
+            temporaryList.add(car);
+            destinationMap.put(isAnotherConsortiumInterested, temporaryList);
+        }
+        
+        return destinationMap;
+    }
+    
+    /**
+    * @author Agnieszka Ząbkowicz
+    * @date 24.06.2021
+    * @description method for sending deleted cars to another consortium
+    * @param carsToSend list of car objects
+    */
+    public static void sendToAnotherConsortium(List<Car__c> carsToSend){
+        List<String> serializedExternals = new List<String>();
+        
+        for(Car__c car : carsToSend){
+            PojazdExternal external = new PojazdExternal(car);
+            serializedExternals.add(JSON.serialize(external));
+        }
+        
+        sendToAnotherConsortiumFuture(serializedExternals);
+    }
+    
+    /**
+    * @author Agnieszka Ząbkowicz
+    * @date 24.06.2021
+    * @description future method for sending deleted cars to another consortium
+    * @param carsToSend list of car objects
+    */
+    @future(callout=true)
+    public static void sendToAnotherConsortiumFuture(List<String> carsToSend){
+        for(String car : carsToSend){
+            CarRESTAPI.callPostCar(PojazdExternal.parse(car));
+        }
+    }
 }

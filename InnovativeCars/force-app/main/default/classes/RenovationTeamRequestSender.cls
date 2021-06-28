@@ -12,6 +12,11 @@ public class RenovationTeamRequestSender implements Queueable, Database.AllowsCa
     }
 
     public void execute(QueueableContext context){
+        sendRequest();
+    }
+    
+    @TestVisible
+    private HttpResponse sendRequest(){
         Http server = new Http();
         HttpRequest req = new HttpRequest();
         req.setEndpoint(Constants.RENOVATION_ENDPOINT);
@@ -30,5 +35,6 @@ public class RenovationTeamRequestSender implements Queueable, Database.AllowsCa
             System.debug(LoggingLevel.ERROR, Constants.CONNECTION_FAILED_MESSAGE);
         }
         update newCases;
+        return resp;
     }
 }

@@ -68,7 +68,7 @@ public class TestFactory {
         List<Showroom__c> showrooms = new List<Showroom__c>();
         for(Integer i = 0; i < inShowroomsNumber; i++){
             Showroom__c newShowroom = new Showroom__c(
-                Name = Constants.TEST_CAR_NAME + i, 
+                Name = Constants.TEST_SHOWROOM_NAME + i, 
                 Type__c = Constants.PICKLIST_PERSONAL_CARS, 
                 Account__c = accounts[0].Id);
             showrooms.add(newShowroom);
@@ -90,6 +90,21 @@ public class TestFactory {
         List<Account> newAccounts = new List<Account>{newAccount};
         insert newAccounts;
         return newAccounts;
+    }
+    
+    /**
+    * @author Agnieszka Ząbkowicz
+    * @date 24.06.2021
+    * @description method for getting an account for cars and showrooms
+    * if exists to be assigned to
+    * @return list containing account
+    */
+    public static List<Account> getAccount(){
+        List<Account> accounts = [SELECT Id FROM Account WHERE Name = :Constants.TEST_ACCOUNT_NAME];
+        if(accounts.size() == 0){
+            accounts = createAccount();
+        }
+        return accounts;
     }
 
     /**
