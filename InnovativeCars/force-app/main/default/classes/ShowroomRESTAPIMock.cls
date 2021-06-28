@@ -1,10 +1,10 @@
 /**
 * @author Agnieszka Ząbkowicz
 * @date 24.06.2021
-* @description mock class for GetShowroomUsingRESTAPITest
+* @description mock class for ShowroomRESTAPITest
 */
 @isTest
-global class GetShowroomUsingRESTAPIMock implements HttpCalloutMock{
+global class ShowroomRESTAPIMock implements HttpCalloutMock{
     
 	global HTTPResponse respond(HTTPRequest request) {
         List<Showroom__c> showrooms = [SELECT Id, Name, Address__c, 

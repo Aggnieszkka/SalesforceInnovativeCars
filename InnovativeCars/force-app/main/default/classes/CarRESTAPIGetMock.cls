@@ -1,10 +1,10 @@
 /**
 * @author Agnieszka Ząbkowicz
 * @date 24.06.2021
-* @description mock class for GetCarUsingRESTAPITest get method
+* @description mock class for CarRESTAPI get method
 */
 @isTest
-global class GetCarUsingRESTAPIGetMock implements HttpCalloutMock{
+global class CarRESTAPIGetMock implements HttpCalloutMock{
     
 	global HTTPResponse respond(HTTPRequest request) {
         List<Car__c> cars = [SELECT Id, Name, Brand__c, Serial_Number__c,

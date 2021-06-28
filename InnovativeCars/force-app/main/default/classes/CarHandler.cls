@@ -122,7 +122,7 @@ public class CarHandler {
     @future(callout=true)
     public static void sendToAnotherConsortiumFuture(List<String> carsToSend){
         for(String car : carsToSend){
-            GetCarUsingRESTAPI.callPostCar(PojazdExternal.parse(car));
+            CarRESTAPI.callPostCar(PojazdExternal.parse(car));
         }
     }
 }

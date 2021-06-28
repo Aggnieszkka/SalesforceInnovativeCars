@@ -23,39 +23,12 @@ public class PojazdExternalTest {
         cars[3].State__c = 'In repair';
         cars[4].State__c = 'Broken';
         
-        for(Integer i = 0; i<151; i++) {
-            Car__c car = cars[i];
+        for(Car__c car : cars) {
             PojazdExternal external = new PojazdExternal(car);
             System.assertEquals(external.name, car.Serial_Number__c);
             System.assertEquals(external.pojazdId, car.Id);
-            switch on car.State__c {
-                when 'New'{
-                    System.assertEquals(external.stan, 'new');
-                }
-                when 'Ready for sale'{
-                    System.assertEquals(external.stan, 'ready_for_sale');
-                }
-                when 'Sold'{
-                    System.assertEquals(external.stan, 'sold');
-                }
-                when 'In repair'{
-                    System.assertEquals(external.stan, 'in_repair');
-                }
-                when 'Broken'{
-                    System.assertEquals(external.stan, 'broken');
-                }
-            }
-            switch on car.Type__c {
-                when 'Sport'{
-                    System.assertEquals(external.rodzaj, 'sport');
-                }
-                when 'Family'{
-                    System.assertEquals(external.rodzaj, 'family');
-                }
-                when 'Truck'{
-                    System.assertEquals(external.rodzaj, 'truck');
-                }
-            }
+            System.assertEquals(external.stan, Constants.CAR_STATE_TO_POJAZD_EXTERNAL_STAN_MAP.get(car.State__c));
+			System.assertEquals(external.rodzaj, Constants.CAR_TYPE_TO_POJAZD_EXTERNAL_RODZAJ_MAP.get(car.Type__c));
         }
     }
     
@@ -87,34 +60,8 @@ public class PojazdExternalTest {
             PojazdExternal external = pojazdExternals[i];
             Car__c car = external.getCar();
             System.assertEquals(external.name, car.Serial_Number__c);
-            switch on external.stan {
-                when 'new'{
-                    System.assertEquals(car.State__c, 'New');
-                }
-                when 'ready_for_sale'{
-                    System.assertEquals(car.State__c, 'Ready for sale');
-                }
-                when 'sold'{
-                    System.assertEquals(car.State__c, 'Sold');
-                }
-                when 'in_repair'{
-                    System.assertEquals(car.State__c, 'In repair');
-                }
-                when 'broken'{
-                    System.assertEquals(car.State__c, 'Broken');
-                }
-            }
-            switch on external.rodzaj {
-                when 'sport'{
-                    System.assertEquals(car.Type__c, 'Sport');
-                }
-                when 'family'{
-                    System.assertEquals(car.Type__c, 'Family');
-                }
-                when 'truck'{
-                    System.assertEquals(car.Type__c, 'Truck');
-                }
-            }
+            System.assertEquals(Constants.POJAZD_EXTERNAL_STAN_TO_CAR_STATE_MAP.get(external.stan), car.State__c);
+            System.assertEquals(Constants.POJAZD_EXTERNAL_RODZAJ_TO_CAR_TYPE_MAP.get(external.rodzaj), car.Type__c);
         }
         
         Car__c car149 = pojazdExternals[149].getCar();

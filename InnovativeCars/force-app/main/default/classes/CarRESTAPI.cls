@@ -4,7 +4,7 @@
 * @description class for callout to get external cars or changing value of checkbox
 * if interested or sending cars to another consortium
 */
-public class GetCarUsingRESTAPI {
+public class CarRESTAPI {
     
     /**
     * @author Agnieszka Ząbkowicz
@@ -33,16 +33,19 @@ public class GetCarUsingRESTAPI {
             newRequest.setEndpoint(endPoint);
             HttpResponse newResponse = newHttp.send(newRequest);
             
-            String trimmedResponse = newResponse.getBody().unescapeCsv().remove('\\');
-            system.debug('@@@RESPONSE@@'+trimmedResponse);
-            
-            List<PojazdExternal> pojazdExternalList = (List<PojazdExternal>)JSON.deserialize(newResponse.getBody(), List<PojazdExternal>.class);
-            for(PojazdExternal pojazdExternal : pojazdExternalList){
-                System.debug('###CarEx###' + pojazdExternal.name + ' - ' + pojazdExternal.pojazdId);
-                Car__c car = pojazdExternal.getCar();
-                carList.add(car);
-                System.debug('###Car###' + car.Brand__c + '/' + car.Model__c + ' - ' + car.Is_Another_Consortium_Interested__c + ' - ' + car.Id);
-            }
+            try {
+                String trimmedResponse = newResponse.getBody().unescapeCsv().remove('\\');
+            	system.debug('@@@RESPONSE@@'+trimmedResponse);
+                
+                List<PojazdExternal> pojazdExternalList = (List<PojazdExternal>)JSON.deserialize(newResponse.getBody(), List<PojazdExternal>.class);
+                for(PojazdExternal pojazdExternal : pojazdExternalList){
+                    System.debug('###CarEx###' + pojazdExternal.name + ' - ' + pojazdExternal.pojazdId);
+                    Car__c car = pojazdExternal.getCar();
+                    carList.add(car);
+                }
+            } catch(Exception e) {
+                System.debug('###Exception###' + e);
+			}
         }
         return carList;
     }
@@ -73,13 +76,16 @@ public class GetCarUsingRESTAPI {
             newRequest.setMethod('PATCH');
             newRequest.setEndpoint(endPoint);
             HttpResponse newResponse = newHttp.send(newRequest);
-            
-            String trimmedResponse = newResponse.getBody().unescapeCsv().remove('\\');
-            system.debug('@@@RESPONSE@@'+trimmedResponse);
-            
-            Boolean pojazdExternal = (Boolean)JSON.deserialize(newResponse.getBody(), Boolean.class);
-            System.debug('###Result###' + pojazdExternal);
-            return pojazdExternal;
+            try {
+                String trimmedResponse = newResponse.getBody().unescapeCsv().remove('\\');
+                system.debug('@@@RESPONSE@@'+trimmedResponse);
+                
+                Boolean pojazdExternal = (Boolean)JSON.deserialize(newResponse.getBody(), Boolean.class);
+                System.debug('###Result###' + pojazdExternal);
+                return pojazdExternal;
+            } catch(Exception e) {
+                System.debug('###Exception###' + e);
+			}
         }
         return null;
     }
@@ -108,26 +114,33 @@ public class GetCarUsingRESTAPI {
             newRequest.setHeader('accept','application/json');
             newRequest.setMethod('POST');
             newRequest.setEndpoint(endPoint);
-            pojazdExternal.salonId = null;
-            pojazdExternal.accountId = null;
-            if(pojazdExternal.cena == null){
-                pojazdExternal.cena = 1;
-            }
-            if(pojazdExternal.marka == null){
-                pojazdExternal.marka = '<unknown>';
-            }
-            if(pojazdExternal.model == null){
-                pojazdExternal.model = '<unknown>';
+            if(pojazdExternal != null) {
+                pojazdExternal.salonId = null;
+                pojazdExternal.accountId = null;
+                if(pojazdExternal.cena == null){
+                    pojazdExternal.cena = 1;
+                }
+                if(pojazdExternal.marka == null){
+                    pojazdExternal.marka = '<unknown>';
+                }
+                if(pojazdExternal.model == null){
+                    pojazdExternal.model = '<unknown>';
+                }
             }
                 
             newRequest.setBody(JSON.serialize(pojazdExternal));
             HttpResponse newResponse = newHttp.send(newRequest);
-            String trimmedResponse = newResponse.getBody().unescapeCsv().remove('\\');
-            system.debug('@@@RESPONSE@@'+trimmedResponse);
             
-            PojazdExternal pojazdExternalResult = (PojazdExternal)JSON.deserialize(newResponse.getBody(), PojazdExternal.class);
-            System.debug('###Result###' + pojazdExternalResult.name);
-            return pojazdExternalResult.getCar();
+            try {
+                String trimmedResponse = newResponse.getBody().unescapeCsv().remove('\\');
+                system.debug('@@@RESPONSE@@'+trimmedResponse);
+                
+                PojazdExternal pojazdExternalResult = (PojazdExternal)JSON.deserialize(newResponse.getBody(), PojazdExternal.class);
+                System.debug('###Result###' + pojazdExternalResult.name);
+                return pojazdExternalResult.getCar();
+            } catch(Exception e) {
+                System.debug('###Exception###' + e);
+			}
         }
         return null;
     }

@@ -1,10 +1,10 @@
 /**
 * @author Agnieszka Ząbkowicz
 * @date 24.06.2021
-* @description mock class for GetAccountUsingRESTAPITest
+* @description mock class for AccountRESTAPITest
 */
 @isTest
-global class GetAccountUsingRESTAPIMock implements HttpCalloutMock{
+global class AccountRESTAPIMock implements HttpCalloutMock{
     
 	global HTTPResponse respond(HTTPRequest request) {
         List<Account> account = TestFactory.getAccount();

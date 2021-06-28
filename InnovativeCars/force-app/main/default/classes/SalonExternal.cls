@@ -12,30 +12,10 @@ global class SalonExternal {
         salonId = inShowroom.Id;
         name = inShowroom.Name;
         adres = inShowroom.Address__c;
-        switch on inShowroom.Type__c {
-            when 'Personal Cars'{
-                typ = 'personal_cars';
-            }
-            when 'Specialist Cars'{
-                typ = 'specialist_cars';
-            }
-            when 'All'{
-                typ = 'all';
-            }
-        }
+        typ = Constants.SHOWROOM_TYPE_TO_SALON_EXTERNAL_TYP_MAP.get(inShowroom.Type__c);
         accountId = inShowroom.Account__c;
         strona = inShowroom.Website__c;
-        switch on inShowroom.Status__c {
-            when 'Open'{
-                status = 'open';
-            }
-            when 'Closed'{
-                status = 'closed';
-            }
-            when 'Open Day'{
-                status = 'open_day';
-            }
-        }
+        status = Constants.SHOWROOM_STATUS_TO_SALON_EXTERNAL_STATUS_MAP.get(inShowroom.Status__c);
         liczba_miejsc = inShowroom.Car_Spaces__c;
         magazyn = inShowroom.Warehouse__c;
         region = inShowroom.Region__c;
@@ -72,30 +52,6 @@ global class SalonExternal {
     * @return Showroom object
     */
     public Showroom__c getShowroom(){
-        String showroomStatus = null;
-        String showroomType = null;
-       	switch on status {
-            when 'open'{
-                showroomStatus = 'Open';
-            }
-            when 'closed'{
-                showroomStatus = 'Closed';
-            }
-            when 'open_day'{
-                showroomStatus = 'Open Day';
-            }
-        }
-        switch on typ {
-            when 'personal_cars'{
-                showroomType = 'Personal Cars';
-            }
-            when 'specialist_cars'{
-                showroomType = 'Specialist Cars';
-            }
-            when 'all'{
-                showroomType = 'All';
-            }
-        }
         Showroom__c showroom = new Showroom__c(
             Name = name,
            	Address__c = adres,
@@ -104,8 +60,8 @@ global class SalonExternal {
             Warehouse__c = magazyn,
             Region__c = region,
             Interns__c = liczba_stazystow,
-            Type__c = showroomType,
-            Status__c = showroomStatus
+            Type__c = Constants.SALON_EXTERNAL_TYP_TO_SHOWROOM_TYPE_MAP.get(typ),
+            Status__c = Constants.SALON_EXTERNAL_STATUS_TO_SHOWROOM_STATUS_MAP.get(status)
         );
         return showroom;
     }

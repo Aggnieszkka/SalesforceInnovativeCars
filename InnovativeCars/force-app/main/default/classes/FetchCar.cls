@@ -44,9 +44,8 @@ global with sharing class FetchCar{
         RestRequest request = RestContext.request;
         String carId = request.requestURI.substring(
             request.requestURI.lastIndexOf('/')+1);
-        Car__c car = [SELECT Id, Is_Another_Consortium_Interested__c FROM Car__c WHERE Id = :carId];
-        car.Is_Another_Consortium_Interested__c = Boolean.valueOf(request.params.get('czy_usunac'));
-
+		Boolean isInterested = Boolean.valueOf(request.params.get('czy_usunac'));
+		Car__c car = new Car__c(Id = carId, Is_Another_Consortium_Interested__c = isInterested);
         update car;
         return car.Id;
     } 

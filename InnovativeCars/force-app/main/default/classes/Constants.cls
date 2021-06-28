@@ -33,4 +33,57 @@ global class Constants {
     global static final String CONNECTION_FAILED_MESSAGE = 'Connection failed';
     global static final String CRON_EXP = '0 0 0 15 6 ? *';
     global static string ACCOUNT_ID_FOR_CAR_FROM_REST = '0010900000Qz9oRAAR';
+    
+    global static Map<String, String> CAR_TYPE_TO_POJAZD_EXTERNAL_RODZAJ_MAP = new Map<String, String>
+    {
+         'Sport'=>'sport',
+         'Family'=>'family',
+         'Truck'=>'truck'
+    };
+    global static Map<String, String> POJAZD_EXTERNAL_RODZAJ_TO_CAR_TYPE_MAP = new Map<String, String>
+    {
+         'sport'=>'Sport',
+         'family'=>'Family',
+         'truck'=>'Truck'
+    };
+    global static Map<String, String> CAR_STATE_TO_POJAZD_EXTERNAL_STAN_MAP = new Map<String, String>
+    {
+		'New' => 'new',
+		'Ready for sale' => 'ready_for_sale',
+		'Sold' => 'sold',
+		'In repair' => 'in_repair',
+		'Broken' => 'broken'
+    };
+    global static Map<String, String> POJAZD_EXTERNAL_STAN_TO_CAR_STATE_MAP = new Map<String, String>
+    {
+		'new' =>'New' ,
+		'ready_for_sale'=> 'Ready for sale',
+		'sold' =>'Sold',
+		'in_repair' =>'In repair',
+		'broken' => 'Broken'
+    };
+    global static Map<String, String> SHOWROOM_TYPE_TO_SALON_EXTERNAL_TYP_MAP = new Map<String, String>
+    {
+		'Personal Cars' => 'personal_cars',
+		'Specialist Cars' => 'specialist_cars',
+		'All' => 'all'
+    };
+    global static Map<String, String> SALON_EXTERNAL_TYP_TO_SHOWROOM_TYPE_MAP = new Map<String, String>
+    {
+		'personal_cars' => 'Personal Cars',
+		'specialist_cars' => 'Specialist Cars',
+		'all' => 'All'
+    };        
+	global static Map<String, String> SHOWROOM_STATUS_TO_SALON_EXTERNAL_STATUS_MAP = new Map<String, String>
+    {
+		'Open' => 'open',
+		'Closed' => 'closed',
+		'Open Day' => 'open_day'
+    };
+    global static Map<String, String> SALON_EXTERNAL_STATUS_TO_SHOWROOM_STATUS_MAP = new Map<String, String>
+    {
+		 'open' => 'Open',
+		 'closed' => 'Closed',
+		 'open_day' => 'Open Day'
+    };     
 }

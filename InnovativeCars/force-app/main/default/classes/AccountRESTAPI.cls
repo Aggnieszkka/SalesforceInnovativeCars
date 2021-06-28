@@ -3,7 +3,7 @@
 * @date 24.06.2021
 * @description class for callout to get external accounts
 */
-public class GetAccountUsingRESTAPI{
+public class AccountRESTAPI{
 
     /**
     * @author Agnieszka Ząbkowicz
@@ -31,17 +31,19 @@ public class GetAccountUsingRESTAPI{
             newRequest.setMethod('GET');
             newRequest.setEndpoint(endPoint);
             HttpResponse newResponse = newHttp.send(newRequest);
-            
-            String trimmedResponse = newResponse.getBody().unescapeCsv().remove('\\');
-            system.debug('@@@RESPONSE@@'+trimmedResponse);
-            
-            List<AccountExternal> accountExternalList = (List<AccountExternal>)JSON.deserialize(newResponse.getBody(), List<AccountExternal>.class);
-            for(AccountExternal accountExternal : accountExternalList){
-                System.debug('###AccountEx###' + accountExternal.Name + ' - ' + accountExternal.accountId + '(' + accountExternal.liczba_nieruchomosci + ')');
-                Account account = accountExternal.getAccount();
-                accountList.add(account);
-                System.debug('###Account###' + account.Name + ' - ' + account.Id + '(' + account.Estate_Count__c + ')');
-            }
+            try {
+                String trimmedResponse = newResponse.getBody().unescapeCsv().remove('\\');
+                system.debug('@@@RESPONSE@@'+trimmedResponse);
+                
+                List<AccountExternal> accountExternalList = (List<AccountExternal>)JSON.deserialize(newResponse.getBody(), List<AccountExternal>.class);
+                for(AccountExternal accountExternal : accountExternalList){
+                    System.debug('###AccountEx###' + accountExternal.Name + ' - ' + accountExternal.accountId + '(' + accountExternal.liczba_nieruchomosci + ')');
+                    Account account = accountExternal.getAccount();
+                    accountList.add(account);
+                }
+            } catch(Exception e) {
+                System.debug('###Exception###' + e);
+			}
         }
         return accountList;
     }

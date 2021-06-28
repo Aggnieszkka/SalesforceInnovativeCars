@@ -21,33 +21,12 @@ public class SalonExternalTest {
         showrooms[2].Type__c = 'All';
         showrooms[2].Status__c = 'Open Day';
         
-        for(Integer i = 0; i<151; i++) {
-            Showroom__c showroom = showrooms[i];
+        for(Showroom__c showroom : showrooms) {
             SalonExternal external = new SalonExternal(showroom);
             System.assertEquals(external.name, showroom.name);
             System.assertEquals(external.salonId, showroom.Id);
-            switch on showroom.Type__c {
-                when 'Personal Cars'{
-                    System.assertEquals(external.typ, 'personal_cars');
-                }
-                when 'Specialist Cars'{
-                    System.assertEquals(external.typ, 'specialist_cars');
-                }
-                when 'All'{
-                    System.assertEquals(external.typ, 'all');
-                }
-            }
-            switch on showroom.Status__c {
-                when 'Open'{
-                    System.assertEquals(external.status, 'open');
-                }
-                when 'Closed'{
-                    System.assertEquals(external.status, 'closed');
-                }
-                when 'Open Day'{
-                    System.assertEquals(external.status, 'open_day');
-                }
-            }
+            System.assertEquals(external.typ, Constants.SHOWROOM_TYPE_TO_SALON_EXTERNAL_TYP_MAP.get(showroom.Type__c));
+            System.assertEquals(external.status, Constants.SHOWROOM_STATUS_TO_SALON_EXTERNAL_STATUS_MAP.get(showroom.Status__c));
         }
     }
     
@@ -75,28 +54,8 @@ public class SalonExternalTest {
             SalonExternal external = salonExternals[i];
             Showroom__c showroom = external.getShowroom();
             System.assertEquals(external.name, showroom.name);
-            switch on external.typ {
-                when 'personal_cars'{
-                    System.assertEquals(showroom.Type__c, 'Personal Cars');
-                }
-                when 'specialist_cars'{
-                    System.assertEquals(showroom.Type__c, 'Specialist Cars');
-                }
-                when 'all'{
-                    System.assertEquals(showroom.Type__c, 'All');
-                }
-            }
-            switch on external.status {
-                when 'open'{
-                    System.assertEquals(showroom.Status__c, 'Open');
-                }
-                when 'closed'{
-                    System.assertEquals(showroom.Status__c, 'Closed');
-                }
-                when 'open_day'{
-                    System.assertEquals(showroom.Status__c, 'Open Day');
-                }
-            }
+            System.assertEquals(Constants.SALON_EXTERNAL_TYP_TO_SHOWROOM_TYPE_MAP.get(external.typ), showroom.Type__c);
+            System.assertEquals(Constants.SALON_EXTERNAL_STATUS_TO_SHOWROOM_STATUS_MAP.get(external.status), showroom.Status__c);
         }
 
     }
