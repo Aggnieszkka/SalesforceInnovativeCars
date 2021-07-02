@@ -1,0 +1,29 @@
+<template>
+    <template if:true={car}>
+        <lightning-card title={cardTitle}>
+            <div slot="actions">
+                <lightning-button label="Change Interest" onclick={handleInterestClick} class="slds-m-left_x-small"></lightning-button>
+            </div>
+            <div class="slds-var-p-horizontal_small">
+                <div class="slds-media">
+                    <div class="slds-media__body">
+                        <p class="slds-var-m-bottom_xx-small">Serial Number: {car.Serial_Number__c}</p>
+                        <p class="slds-var-m-bottom_xx-small">Brand and Model: {car.Brand__c} - {car.Model__c}</p>
+                        <template if:true={car.Price__c}>
+                            <p class="slds-var-m-bottom_xx-small">Price: {car.Price__c}$</p>
+                        </template>
+                        <p class="slds-var-m-bottom_xx-small">State: {car.State__c}</p>
+                        <p class="slds-var-m-bottom_xx-small">
+                            <template if:true={interested}>
+                                Interested
+                            </template>
+                            <template if:false={interested}>
+                                Not interested
+                            </template>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </lightning-card>
+    </template>
+</template>

@@ -13,6 +13,7 @@ public class CarRESTAPI {
     * @param showroomId id of the showroom from which are returned cars
     * @return list of cars
     */
+    @AuraEnabled(cacheable=true)
     public static List<Car__c> callGetCar(String showroomId){
         String accessToken;
         if(!Test.isRunningTest()){
@@ -58,6 +59,7 @@ public class CarRESTAPI {
     * @param carId id of the updated car
     * @return result of the change
     */
+    @AuraEnabled
     public static Boolean callPatchCar(String carId){
         String accessToken;
         if(!Test.isRunningTest()){

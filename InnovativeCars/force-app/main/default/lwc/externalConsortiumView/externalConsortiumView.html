@@ -1,0 +1,61 @@
+<template>
+	<lightning-card title="External Consortium View">
+		<div class="slds-card__body_inner">
+
+			<template if:false={showAccounts}>
+				<lightning-button label="Back" onclick={handleBackClick} class="slds-m-left_x-small"></lightning-button>
+			</template>
+
+			<template if:true={showAccounts}>
+				<lightning-card>
+					<template if:true={accounts.data}>
+						<lightning-datatable
+							key-field="Id"
+							data={accounts.data}
+							columns={accounts_columns}
+							hide-checkbox-column="true"
+							onrowaction={handleAccountRowAction}
+						>
+						</lightning-datatable>
+					</template>
+				</lightning-card>
+			</template>
+
+			<template if:true={showShowrooms}>
+				<lightning-card>
+					<template if:true={showrooms.data}>
+						<lightning-datatable
+							key-field="Id"
+							data={showrooms.data}
+							columns={showrooms_columns}
+							hide-checkbox-column="true"
+							onrowaction={handleShowroomRowAction}
+						>
+						</lightning-datatable>
+					</template>
+				</lightning-card>
+			</template>
+
+			<template if:true={showCars}>
+				<lightning-card>
+					<template if:true={cars.data}>
+						<lightning-datatable
+							key-field="Id"
+							data={cars.data}
+							columns={cars_columns}
+							hide-checkbox-column="true"
+							onrowaction={handleCarRowAction}
+						>
+						</lightning-datatable>
+					</template>
+				</lightning-card>
+			</template>
+
+			<template if:true={error}>
+				<div class="slds-text-color_error">
+					An error occurred while loading the list
+				</div>
+			</template>
+		</div>
+	</lightning-card>
+</template>
