@@ -12,7 +12,8 @@ public class AccountRESTAPI{
     * @param inLimit limit of returned accounts
     * @return list of returned accounts
     */
-    public static List<Account> callGetAccount(Integer inLimit){
+    @AuraEnabled(cacheable=true)
+    public static List<Account> callGetAccount(){
         String accessToken;
         if(!Test.isRunningTest()){
             AccessTokenRESTAPI tokenRESTAPI = new AccessTokenRESTAPI();
@@ -22,7 +23,7 @@ public class AccountRESTAPI{
         }
         List<Account> accountList = new List<Account>();
         if(accessToken != null) {
-            String endPoint = 'https://mindful-shark-iwybc-dev-ed.my.salesforce.com/services/apexrest/v1/accounts?limit='+inLimit;
+            String endPoint = 'https://mindful-shark-iwybc-dev-ed.my.salesforce.com/services/apexrest/v1/accounts?limit=100';
             Http newHttp = new Http();
             HttpRequest newRequest = new HttpRequest();
             newRequest.setHeader('Authorization','Bearer ' + accessToken);

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<LightningMessageChannel xmlns="http://soap.sforce.com/2006/04/metadata">
+    <masterLabel>CarUpdate</masterLabel>
+    <description>This message is fired when the detail of car is clicked.</description>
+    <lightningMessageFields>
+        <fieldName>car</fieldName>
+        <description>Selected car.</description>
+    </lightningMessageFields>
+</LightningMessageChannel>

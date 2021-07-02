@@ -12,6 +12,7 @@ public class ShowroomRESTAPI{
     * @param accountId id of the account to which returned showrooms belong
     * @return list of returned showrooms
     */
+    @AuraEnabled(cacheable=true)
     public static List<Showroom__c> callGetShowroom(String accountId){
         String accessToken;
         if(!Test.isRunningTest()){

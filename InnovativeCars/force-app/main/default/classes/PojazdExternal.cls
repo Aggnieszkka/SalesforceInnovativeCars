@@ -71,6 +71,7 @@ global class PojazdExternal {
             serialNumber=name.substring(0, 6);
         }
         Car__c car = new Car__c(
+            External_ID__c = pojazdId,
             Brand__c = marka,
             Model__c = model,
             State__c = Constants.POJAZD_EXTERNAL_STAN_TO_CAR_STATE_MAP.get(stan),

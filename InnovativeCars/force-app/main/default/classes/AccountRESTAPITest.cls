@@ -14,7 +14,7 @@ public class AccountRESTAPITest {
         Test.setMock(HttpCalloutMock.class, new AccountRESTAPIMock()); 
         
         Test.startTest();
-        List<Account> accounts = AccountRESTAPI.callGetAccount(10);
+        List<Account> accounts = AccountRESTAPI.callGetAccount();
         Test.stopTest();
 
         System.assertEquals(1, accounts.size());
@@ -29,7 +29,7 @@ public class AccountRESTAPITest {
         Test.setMock(HttpCalloutMock.class, new AccountRESTAPIMockUnauthorized()); 
         
         Test.startTest();
-        List<Account> accounts = AccountRESTAPI.callGetAccount(10);
+        List<Account> accounts = AccountRESTAPI.callGetAccount();
         Test.stopTest();
 
         System.assertEquals(0, accounts.size());

@@ -82,7 +82,9 @@ global class AccountExternal {
     public Account getAccount(){
         Account account = new Account(
             Name = name,
-            Type = type,            
+            Type = type,   
+            External_ID__c = accountId,
+            External_Estate_Count__c = liczba_nieruchomosci,         
             
             BillingCity = billingAddress.city,
             BillingCountry = billingAddress.country,

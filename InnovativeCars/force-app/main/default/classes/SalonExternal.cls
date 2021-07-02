@@ -53,6 +53,7 @@ global class SalonExternal {
     */
     public Showroom__c getShowroom(){
         Showroom__c showroom = new Showroom__c(
+            External_ID__c = salonId,
             Name = name,
            	Address__c = adres,
             Website__c = strona,
